@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.avast.com/schemas/com/avast/syringe/config/SampleB" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.avast.com/schemas/com/avast/syringe/config/SampleB">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="x" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="sa" type="com.avast.syringe.config.SampleA" minOccurs="1" maxOccurs="1"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="com.avast.syringe.config.SampleA">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>reference</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+</xs:schema>

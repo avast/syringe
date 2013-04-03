@@ -1,0 +1,23 @@
+<config xmlns="http://www.avast.com/schemas/com/avast/syringe/config/SampleA" decorators="">
+    <i>100</i>
+    <s>hello</s>
+    <lr>
+        <value>SampleC.xml</value>
+        <value>SampleC.xml</value>
+    </lr>
+    <mr>
+        <entry key="1">SampleC.xml</entry>
+        <entry key="2">SampleC.xml</entry>
+    </mr>
+    <r1>SampleC.xml</r1>
+    <r2>SampleC.xml</r2>
+    <r3>SampleC.xml</r3>
+    <l>
+        <value>aaa</value>
+        <value>bbb</value>
+    </l>
+    <m>
+        <entry key="1">xxx</entry>
+        <entry key="2">yyy</entry>
+    </m>
+</config>

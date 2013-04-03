@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.avast.com/schemas/com/avast/syringe/config/Decorator1" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.avast.com/schemas/com/avast/syringe/config/Decorator1">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="delegate" type="java.lang.Runnable" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="a" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            </xs:all>
+            <xs:attribute name="decorators" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="java.lang.Runnable">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>reference</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,4 @@
+<config xmlns="http://www.avast.com/schemas/com/avast/syringe/config/SampleB">
+    <x>xyz</x>
+    <sa>SampleA.xml</sa>
+</config>

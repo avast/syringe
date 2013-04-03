@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.avast.com/schemas/com/avast/syringe/config/SampleA" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.avast.com/schemas/com/avast/syringe/config/SampleA">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="i" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="s" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="l" type="lType" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="m" type="mType" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="lr" type="lrType" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="mr" type="mrType" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="r1" type="java.lang.Runnable" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="r2" type="java.lang.Runnable" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="r3" type="com.avast.syringe.config.SampleC" minOccurs="1" maxOccurs="1"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="lType">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>list</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="value" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="lrType">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>list</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="value" type="java.lang.Runnable" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="mType">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>map</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="entry" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="key" type="xs:integer" use="required"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="mrType">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>map</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="entry" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="java.lang.Runnable">
+                            <xs:attribute name="key" type="xs:integer" use="required"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="java.lang.Runnable">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>reference</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="com.avast.syringe.config.SampleC">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>reference</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+</xs:schema>

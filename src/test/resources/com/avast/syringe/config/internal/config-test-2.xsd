@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.avast.com/schemas/com/avast/myapp/MyAppRepRequestHandler" xmlns="http://www.avast.com/schemas/com/avast/myapp/MyAppRepRequestHandler"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:element name="config-test">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="port" type="xs:string" />
+                <xs:element name="list" type="listOfStringType" />
+                <xs:element name="map" type="mapOfStringToIntegerType" />
+                <xs:element name="ref" type="com.avast.cloud.RequestHandler" />
+            </xs:all>
+            <xs:attribute name="decorators" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="listOfStringType">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>list</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="com.avast.cloud.RequestHandler">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>reference</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:complexType name="mapOfStringToIntegerType">
+        <xs:annotation>
+            <xs:appinfo>type_info</xs:appinfo>
+            <xs:documentation>map</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:integer">
+                            <xs:attribute name="key" type="xs:string" use="required"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

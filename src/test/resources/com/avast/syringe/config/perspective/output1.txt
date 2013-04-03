@@ -1,0 +1,73 @@
+package com.avast.syringe.config.perspective
+import com.avast.syringe.config.perspective._
+import javax.annotation.Generated
+/**
+ * Description
+ *
+ */
+@Generated(value = Array("Syringe"))
+trait OneComponentModule extends SyringeModule
+with com.avast.Trait1
+with com.avast.Trait2
+{
+
+object SampleABuilder
+{
+    type instanceType = com.avast.syringe.config.perspective.SampleA
+    val instanceClass = classOf[com.avast.syringe.config.perspective.SampleA]
+}
+class SampleABuilder (instanceClass: Class[_]) extends SyringeBuilder[SampleABuilder.instanceType](instanceClass)
+with com.avast.BuilderTrait1[SampleABuilder.instanceType]
+with com.avast.BuilderTrait2[SampleABuilder.instanceType]
+{
+    def this() = this(SampleABuilder.instanceClass)
+    def set(propertyName: String, value: => Any): this.type = inject(propertyName, value)
+    def iProp(value: => Int): this.type = inject("iProp", value)
+    def sProp(value: => String): this.type = inject("sProp", value)
+    def addToLProp(value: => String): this.type = inject("lProp", value)
+    def addToAProp(value: => String): this.type = inject("aProp", value)
+    def putToMProp(key: => String, value: => Int): this.type = inject("mProp", key, value)
+    def rProp(value: => Builder[_]): this.type = inject("rProp", value)
+    def addToArProp(value: => Builder[_]): this.type = inject("arProp", value)
+    def addToLrProp(value: => Builder[_]): this.type = inject("lrProp", value)
+    def putToMrProp(key: => Builder[_], value: => Builder[_]): this.type = inject("mrProp", key, value)
+}
+
+def newSampleA = new SampleABuilder().initialize
+lazy val sampleA = __sm__[SampleABuilder](newSampleA)
+
+object SampleProviderABuilder
+{
+    type instanceType = com.avast.syringe.Provider[java.util.Map[_, _]]
+    val instanceClass = classOf[com.avast.syringe.config.perspective.SampleProviderA]
+}
+class SampleProviderABuilder (instanceClass: Class[_]) extends SyringeBuilder[SampleProviderABuilder.instanceType](instanceClass)
+with com.avast.BuilderTrait1[SampleProviderABuilder.instanceType]
+with com.avast.BuilderTrait2[SampleProviderABuilder.instanceType]
+{
+    def this() = this(SampleProviderABuilder.instanceClass)
+    def set(propertyName: String, value: => Any): this.type = inject(propertyName, value)
+    def iProp(value: => Int): this.type = inject("iProp", value)
+}
+
+def newSampleProviderA = new SampleProviderABuilder().initialize
+lazy val sampleProviderA = __sm__[SampleProviderABuilder](newSampleProviderA)
+
+object SampleProviderBBuilder
+{
+    type instanceType = com.avast.syringe.Provider[java.lang.Runnable]
+    val instanceClass = classOf[com.avast.syringe.config.perspective.SampleProviderB]
+}
+class SampleProviderBBuilder (instanceClass: Class[_]) extends SyringeBuilder[SampleProviderBBuilder.instanceType](instanceClass)
+with com.avast.BuilderTrait1[SampleProviderBBuilder.instanceType]
+with com.avast.BuilderTrait2[SampleProviderBBuilder.instanceType]
+{
+    def this() = this(SampleProviderBBuilder.instanceClass)
+    def set(propertyName: String, value: => Any): this.type = inject(propertyName, value)
+    def iProp(value: => Int): this.type = inject("iProp", value)
+}
+
+def newSampleProviderB = new SampleProviderBBuilder().initialize
+lazy val sampleProviderB = __sm__[SampleProviderBBuilder](newSampleProviderB)
+
+}

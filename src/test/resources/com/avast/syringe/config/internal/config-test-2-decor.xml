@@ -1,0 +1,14 @@
+<config-test xmlns="http://www.avast.com/schemas/com/avast/myapp/MyAppRepRequestHandler" decorators="Decor1,Decor2">
+    <list>
+        <value>aaa</value>
+        <value>bbb</value>
+        <value>ccc</value>
+    </list>
+    <map>
+        <entry key="a">1</entry>
+        <entry key="b">2</entry>
+        <entry key="c">3</entry>
+    </map>
+    <port>100</port>
+    <ref>FileRepHandler</ref>
+</config-test>
