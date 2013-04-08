@@ -8,6 +8,7 @@ available for Java and Scala projects. More information can be found in the
 
 ### Components
 
+```scala
     import com.avast.syringe.config.{ConfigProperty, ConfigBean}
     
     @ConfigBean
@@ -25,12 +26,14 @@ available for Java and Scala projects. More information can be found in the
       var message: String = _
     
     }
+```
 
 ### Wiring
 
-`MyModule` (aka *palette*) is generated via [Syringe Maven Plugin](https://github.com/avast-open/syringe-maven-plugin "Syringe Maven Plugin").
-There can be many traits (aka *perspectives*) which can inherit from each other and override specific components.
+`MyModule` (aka __palette__) is generated via [Syringe Maven Plugin](https://github.com/avast-open/syringe-maven-plugin "Syringe Maven Plugin").
+There can be many traits (aka __perspectives__) which can inherit from each other and override specific components.
 
+```scala
     trait Perspective extends MyModule {
       
       lazy val msg = "Hello World!"
@@ -44,9 +47,11 @@ There can be many traits (aka *perspectives*) which can inherit from each other 
                                      .message(msg)
     
     }
+```
 
 ### Run
 
+```scala
     object MyApp extends Perspective {
     
       override def main(args: Array[String]) {
@@ -56,12 +61,15 @@ There can be many traits (aka *perspectives*) which can inherit from each other 
       }
       
     }
+```
 
 ## Getting Started
 
-To get started you need to setup your Maven POM as indicated below. Using `mvn clean` and `mvn package` you can regenerate your *palette*
-(module) - there are two automatically enabled Maven profiles for that (`generate-palette` and `build-perspectives`).
+To get started you need to setup your Maven POM as indicated below. Using `mvn clean` and `mvn package` you can 
+regenerate your __palette__ (module) - there are two automatically enabled Maven profiles for that 
+(`generate-palette` and `build-perspectives`).
 
+```xml
     <dependencies>
         <dependency>
             <groupId>com.avast</groupId>
@@ -153,5 +161,5 @@ To get started you need to setup your Maven POM as indicated below. Using `mvn c
                 </plugins>
             </build>
         </profile>
- 
     </profiles>
+```
