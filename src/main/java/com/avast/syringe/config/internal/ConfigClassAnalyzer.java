@@ -52,6 +52,47 @@ public class ConfigClassAnalyzer {
         return findAnnotatedMethod(PreDestroy.class, configClass);
     }
 
+    public InjectableProperty getDelegateProperty() {
+        List<InjectableProperty> configProperties = getConfigProperties();
+        for (InjectableProperty configProperty : configProperties) {
+            if (configProperty.isDelegate()) {
+                return configProperty;
+            }
+        }
+        return null;
+    }
+
+    /*
+     * Strips the first decoration from the decorated object. If the object is not decorated the method
+     * returns the object itself.
+     */
+    public static Object stripShallow(Object decorated) {
+        try {
+            InjectableProperty delegateProperty = new ConfigClassAnalyzer(decorated.getClass()).getDelegateProperty();
+            if (delegateProperty == null) {
+                return decorated;
+            } else {
+                return delegateProperty.getValue(decorated);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Strips all decorations from the decorated object.
+     * @param decorated the decorated object
+     * @return the stripped object
+     */
+    public static Object stripDeep(Object decorated) {
+        Object stripped = stripShallow(decorated);
+        if (stripped == decorated) {
+            return stripped;
+        } else {
+            return stripDeep(stripped);
+        }
+    }
+
     public List<InjectableProperty> getConfigProperties() {
         List<InjectableProperty> result = Lists.newArrayList();
 

@@ -131,7 +131,13 @@ class SyringeModule extends Module {
 
   protected def __sm__[X](builder: SyringeBuilder[_], value: => X): X = value
 
-  def strip[A](decorated: A): A = decorated
+  /**
+   * Strips all decorations from the decorated object.
+   * @param decorated the decorated object
+   * @tparam A
+   * @return the stripped object
+   */
+  def strip[A](decorated: A): A = ConfigClassAnalyzer.stripDeep(decorated).asInstanceOf[A]
 
   class SyringeBuilder[+T](instanceClass: Class[_], defaultInstanceName: String)
     extends Builder[T](instanceClass) with DecoratingBuilder[T] with Cloneable {
