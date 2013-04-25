@@ -131,6 +131,8 @@ class SyringeModule extends Module {
 
   protected def __sm__[X](builder: SyringeBuilder[_], value: => X): X = value
 
+  def strip[A](decorated: A): A = decorated
+
   class SyringeBuilder[+T](instanceClass: Class[_], defaultInstanceName: String)
     extends Builder[T](instanceClass) with DecoratingBuilder[T] with Cloneable {
 
@@ -240,7 +242,6 @@ class SyringeModule extends Module {
       decorators ::= f
       this
     }
-
 
     def delegateWith[D <: Interceptor[_]](provider: Delegation[D]) : this.type = {
       val f = () => __sm__(this, provider.intercept)
