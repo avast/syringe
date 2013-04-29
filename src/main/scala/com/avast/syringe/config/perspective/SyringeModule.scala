@@ -446,6 +446,7 @@ class SyringeModule extends Module {
     case c: Char => Char.box(c)
     case f: Float => Float.box(f)
     case d: Double => Double.box(d)
+    case b: Boolean => Boolean.box(b)
     case _ => assert(false)
   }
 
