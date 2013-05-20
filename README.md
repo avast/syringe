@@ -67,7 +67,8 @@ object MyApp extends Perspective {
 
 To get started you need to setup your Maven POM as indicated below. Using `mvn clean` and `mvn package` you can 
 regenerate your __palette__ (module) - there are two automatically enabled Maven profiles for that 
-(`generate-palette` and `build-perspectives`).
+(`generate-palette` and `build-perspectives`). However, to build the entire project __you need to run `mvn package` twice__ - 
+first the palette is generated and second the palette is compiled.
 
 ```xml
 <dependencies>
