@@ -15,7 +15,7 @@
 
     <name>Syringe</name>
     <description>Dependency injection and configuration library for Java and Scala</description>
-    <url>https://github.com/avast-open/syringe</url>
+    <url>https://github.com/avast/syringe</url>
     <licenses>
         <license>
             <name>The BSD 3-Clause License</name>
@@ -46,9 +46,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:avast-open/syringe.git</connection>
-        <developerConnection>scm:git:git@github.com:avast-open/syringe.git</developerConnection>
-        <url>git@github.com:avast-open/syringe.git</url>
+        <connection>scm:git:git@github.com:avast/syringe.git</connection>
+        <developerConnection>scm:git:git@github.com:avast/syringe.git</developerConnection>
+        <url>git@github.com:avast/syringe.git</url>
     </scm>
 
     <properties>
