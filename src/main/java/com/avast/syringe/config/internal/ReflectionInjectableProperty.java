@@ -28,15 +28,17 @@ public class ReflectionInjectableProperty implements InjectableProperty {
     private final Method atomicSetter;
     private final Method atomicGetter;
     private final boolean optional;
+    private final String name;
     private final boolean delegate;
     private final ConfigProperty.Habitat habitat;
     private final PropertyValueConverter converter;
     private final Class referenceType;
 
-    public ReflectionInjectableProperty(Field field, boolean optional, ConfigProperty.Habitat habitat,
+    public ReflectionInjectableProperty(Field field, boolean optional, String name, ConfigProperty.Habitat habitat,
                                         boolean delegate, @Nullable PropertyValueConverter converter) {
         this.field = field;
         this.optional = optional;
+        this.name = name;
         this.habitat = habitat;
         this.converter = converter;
         this.delegate = delegate;
@@ -132,7 +134,11 @@ public class ReflectionInjectableProperty implements InjectableProperty {
     }
 
     public String getName() {
-        return field.getName();
+        if (name != null && name.length() > 0) {
+            return this.name;
+        } else {
+            return field.getName();
+        }
     }
 
     @Override

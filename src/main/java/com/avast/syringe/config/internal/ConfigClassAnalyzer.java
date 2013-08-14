@@ -1,13 +1,5 @@
 package com.avast.syringe.config.internal;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import com.avast.syringe.config.ConfigProperty;
 import com.avast.syringe.config.PropertyValueConverter;
 import com.google.common.base.Function;
@@ -18,6 +10,13 @@ import com.google.common.collect.Maps;
 import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class ConfigClassAnalyzer {
 
@@ -81,6 +80,7 @@ public class ConfigClassAnalyzer {
 
     /**
      * Strips all decorations from the decorated object.
+     *
      * @param decorated the decorated object
      * @return the stripped object
      */
@@ -116,11 +116,16 @@ public class ConfigClassAnalyzer {
 
                 ConfigProperty configParam = field.getAnnotation(ConfigProperty.class);
                 if (configParam != null) {
-                    InjectableProperty property = new ReflectionInjectableProperty(field, configParam.optional(),
-                            configParam.habitat(), configParam.delegate(), converter);
+                    InjectableProperty property = new ReflectionInjectableProperty(
+                            field,
+                            configParam.optional(),
+                            configParam.name(),
+                            configParam.habitat(),
+                            configParam.delegate(),
+                            converter
+                    );
                     result.add(property);
                 }
-
             }
         }
         return ImmutableList.copyOf(result);

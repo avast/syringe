@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Annotates a configuration property in a configuration class.
  */
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ConfigProperty {
 
@@ -24,8 +24,7 @@ public @interface ConfigProperty {
 
     boolean optional() default false;
 
-    @Deprecated
-    Habitat habitat() default Habitat.DEFAULT;
+    @Deprecated Habitat habitat() default Habitat.DEFAULT;
 
     /**
      * @return true if the config property represents the delegate reference of a decorator
@@ -36,4 +35,10 @@ public @interface ConfigProperty {
      * Arbitrary tags. They can used when resolving 'context' values for properties in resolvers.
      */
     String[] tags() default {};
+
+    /**
+     * Name of the property.
+     * Use if you want to force different than automatically generated name.
+     */
+    String name() default "";
 }
