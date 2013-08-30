@@ -25,8 +25,9 @@ public class CglibProxyFactory implements ProxyFactory {
         ProxyType proxyType = evalProxyType(types);
         Enhancer eh = new Enhancer();
         DefaultMethodInterceptor dmi = new DefaultMethodInterceptor(interceptor);
+        DefaultDispatcher dispatcher = new DefaultDispatcher(interceptor.getTarget());
         Callback[] callbacks = new Callback[] {
-            dmi, NoOp.INSTANCE
+            dmi, dispatcher
         };
         eh.setCallbacks(callbacks);
         CallbackFilter cf = new CallbackFilterAdapter(methodPointcut);
