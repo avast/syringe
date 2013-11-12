@@ -150,6 +150,7 @@ class SyringeModule extends Module {
     private var instanceName: String = defaultInstanceName
     private var resolvers = List[PropertyResolver]()
     private var converter: PropertyValueConverter = null
+    private var multipleInjectionsAllowed = false
 
     val creationStackStamp = new Exception()
 
@@ -302,6 +303,7 @@ class SyringeModule extends Module {
     def getPropertyValues(propName: String) = {
       values.filter(_._1 == propName).map(_._2) match {
         case Nil => defaultValues.filter(_._1 == propName).map(_._2)
+        case vs if multipleInjectionsAllowed => vs.take(1)
         case vs => vs
       }
     }
@@ -382,6 +384,16 @@ class SyringeModule extends Module {
       delegated
     }
 
+
+    /**
+     * Allow multiple injections of single property (mainly for testing purposes).
+     * In case of multiple injections, the last one will be applied.
+     */
+    def syringeAllowMultiInjection = {
+      multipleInjectionsAllowed = true
+      this
+    }
+
     private def notifyPostConstruct[D >: T](instance: D) {
       val postConstMethod = ConfigClassAnalyzer.findAnnotatedMethod(classOf[PostConstruct], instanceClass)
       if (postConstMethod != null) {
@@ -432,6 +444,7 @@ class SyringeModule extends Module {
 
     def getInstanceName = null
 
+    def syringeAllowMultiInjection = null
   }
 
   implicit def convertRefToBuilder[T <: AnyRef](ref: T): Builder[T] = new ReferenceWrapper[T](ref)

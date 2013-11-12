@@ -68,6 +68,8 @@ class InjectionSuite extends FlatSpec with BeforeAndAfter {
         def getInstanceName = null
 
         def getModule = null
+
+        def syringeAllowMultiInjection = null
       }
       inj.inject(inst, List(refBuilder))
 

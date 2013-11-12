@@ -32,4 +32,10 @@ class BuilderWrapper[+T](wrapped: => Builder[T]) extends Builder[T](wrapped.getI
 
   //def makeClone(cloneName: String) = wrapped.makeClone(cloneName)
   def makeClone(cloneName: String) = sys.error("Not supported")
+
+  /**
+   * Allow multiple injections of single property (mainly for testing purposes).
+   * In case of multiple injections, the last one will be applied.
+   */
+  def syringeAllowMultiInjection = wrapped.syringeAllowMultiInjection
 }

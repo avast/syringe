@@ -50,7 +50,6 @@ abstract class Injection(prop: InjectableProperty,
 class ScalarInjection(prop: InjectableProperty,
                       resolvers: List[PropertyResolver]) extends Injection(prop, resolvers) {
   def inject[T](instance: T, values: List[Any]) = {
-
     values.size match {
       case 0 => if (!prop.isOptional) {
         findAndSetContextualValue(instance, "Missing value for mandatory property " + prop.getName + " in " + instance)

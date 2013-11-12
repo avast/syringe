@@ -54,6 +54,12 @@ abstract class Builder[+T](instanceClass: => Class[_]) {
 
   def build[D >: T]: D
 
+  /**
+   * Allow multiple injections of single property (mainly for testing purposes).
+   * In case of multiple injections, the last one will be applied.
+   */
+  def syringeAllowMultiInjection : this.type
+
 //  def build[D >: T]: D = {
 //    val instance: T = buildInstance
 //    val module: Module = getModule

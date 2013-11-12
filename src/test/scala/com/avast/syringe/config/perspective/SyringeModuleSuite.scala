@@ -248,4 +248,23 @@ class SyringeModuleSuite extends FlatSpec with BeforeAndAfter {
     assert(interceptCounter.getBeforeCount == 2)
     assert(interceptCounter.getAfterCount == 2)
   }
+
+  it must "Throw InjectionException while trying to do multiple injections of the same property" in {
+    intercept[InjectionException]{
+      val r = App.newSampleA
+        .sProp("abc")
+        .sProp("def")
+        .build
+    }
+  }
+
+  it must "Allow multiple injections of the same property when requested" in {
+    val r = App.newSampleA
+      .sProp("abc")
+      .sProp("def")
+      .syringeAllowMultiInjection
+      .build
+
+    assert(r.getsProp() === "def")
+  }
 }
