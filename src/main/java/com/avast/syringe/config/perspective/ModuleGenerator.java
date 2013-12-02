@@ -296,6 +296,7 @@ public class ModuleGenerator {
         fmCfg = new Configuration();
         fmCfg.setClassForTemplateLoading(ModuleGenerator.class, "");
         fmCfg.setObjectWrapper(new DefaultObjectWrapper());
+        fmCfg.setTemplateLoader(new OsSpecificTemplateLoader(fmCfg.getTemplateLoader()));
     }
 
     public static ModuleGenerator getInstance() {
