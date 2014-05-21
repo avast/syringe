@@ -74,8 +74,8 @@ first the palette is generated and second the palette is compiled.
 <dependencies>
     <dependency>
         <groupId>com.avast</groupId>
-        <artifactId>syringe</artifactId>
-        <version>1.3</version>
+        <artifactId>syringe_2.9</artifactId>
+        <version>1.6.1</version>
     </dependency>
 </dependencies>
 
