@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.avast</groupId>
-    <artifactId>syringe</artifactId>
+    <artifactId>syringe_${build.scala.version}</artifactId>
     <version>1.6-SNAPSHOT</version>
     <packaging>jar</packaging>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
-        <version>7</version>
+        <version>9</version>
     </parent>
 
     <name>Syringe</name>
@@ -54,6 +54,12 @@
     <properties>
         <timestamp>${maven.build.timestamp}</timestamp>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- set only major (short) Scala versions because only major versions are binary incompatible -->
+        <build.scala.version>2.9</build.scala.version>
+        <!-- exact Scala version used to compile the source -->
+        <build.scala.compiler.version>2.9.3</build.scala.compiler.version>
+        
+        <deps.scalatest.version>2.9.2</deps.scalatest.version>
     </properties>
 
     <dependencies>
@@ -91,7 +97,7 @@
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>2.9.2</version>
+            <version>${build.scala.compiler.version}</version>
         </dependency>
 
         <dependency>
@@ -115,7 +121,7 @@
 
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.9.2</artifactId>
+            <artifactId>scalatest_${deps.scalatest.version}</artifactId>
             <version>1.9.2</version>
             <scope>test</scope>
         </dependency>
@@ -129,7 +135,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
+                <version>3.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -139,7 +145,12 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.1.3</version>
+                <version>3.1.6</version>
+                
+                <configuration>
+                    <scalaVersion>${build.scala.compiler.version}</scalaVersion>
+                    <addScalacArgs>-deprecation</addScalacArgs>
+                </configuration>
 
                 <executions>
                     <execution>
@@ -195,7 +206,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.7</version>
+                <version>2.8</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -230,7 +241,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
+                <version>2.2.1</version>
                 <configuration>
                     <includes>
                         <include>**/*.java</include>
@@ -279,6 +290,32 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+
+        <!-- Scala -->
+        <profile>
+            <id>scala-2.9</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <build.scala.version>2.9</build.scala.version>
+                <build.scala.compiler.version>2.9.3</build.scala.compiler.version>
+                <deps.scalatest.version>2.9.2</deps.scalatest.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>scala-2.10</id>
+            <activation>
+                <property>
+                    <name>scala-2.10</name>
+                </property>
+            </activation>
+            <properties>
+                <build.scala.version>2.10</build.scala.version>
+                <build.scala.compiler.version>2.10.4</build.scala.compiler.version>
+                <deps.scalatest.version>2.10</deps.scalatest.version>
+            </properties>
         </profile>
 
     </profiles>
