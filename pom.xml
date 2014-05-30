@@ -60,6 +60,14 @@
         <build.scala.compiler.version>2.9.3</build.scala.compiler.version>
         
         <deps.scalatest.version>2.9.2</deps.scalatest.version>
+
+        <repo.id>sonatype-nexus-snapshots</repo.id>
+        <repo.snapshot.url>${sonatypeOssDistMgmtSnapshotsUrl}</repo.snapshot.url>
+        <repo.release.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repo.release.url>
+        <repo.deploy.url>${repo.snapshot.url}</repo.deploy.url>
+        <release>false</release>
+
+        <property.fix.dir>pom-property-fix</property.fix.dir>
     </properties>
 
     <dependencies>
@@ -273,6 +281,11 @@
                     <value>true</value>
                 </property>
             </activation>
+            <properties>
+                <repo.id>sonatype-nexus-staging</repo.id>
+                <repo.deploy.url>${repo.release.url}</repo.deploy.url>
+                <release>true</release>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -292,32 +305,182 @@
             </build>
         </profile>
 
-        <!-- Scala -->
         <profile>
             <id>scala-2.9</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <build.scala.version>2.9</build.scala.version>
                 <build.scala.compiler.version>2.9.3</build.scala.compiler.version>
                 <deps.scalatest.version>2.9.2</deps.scalatest.version>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>scala-maven-plugin</artifactId>
+                        <configuration>
+                            <scalaVersion>${build.scala.compiler.version}</scalaVersion>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>property-fix</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}</directory>
+                                            <includes>
+                                                <include>pom.xml</include>
+                                            </includes>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                    <outputDirectory>${project.build.directory}/${property.fix.dir}</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-install-plugin</artifactId>
+                        <executions>
+                            <!-- Overwrites the POM installed into local repository with POM with replaced (resolved) properties.
+                                 This is necessary for the Scala cross-compilation to work. -->
+                            <execution>
+                                <id>overwrite-installed-pom</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>install-file</goal>
+                                </goals>
+                                <configuration>
+                                    <packaging>pom</packaging>
+                                    <file>target/${property.fix.dir}/pom.xml</file>
+                                    <pomFile>target/${property.fix.dir}/pom.xml</pomFile>
+                                    <version>${project.version}</version>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <executions>
+                            <!-- Overwrites the deployed POM with POM with replaced (resolved) properties.
+                                 This is necessary for the Scala cross-compilation to work. -->
+                            <execution>
+                                <id>overwrite-deployed-pom</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy-file</goal>
+                                </goals>
+                                <configuration>
+                                    <repositoryId>${repo.id}</repositoryId>
+                                    <url>${repo.deploy.url}</url>
+                                    <packaging>pom</packaging>
+                                    <file>target/${property.fix.dir}/pom.xml</file>
+                                    <pomFile>target/${property.fix.dir}/pom.xml</pomFile>
+                                    <version>${project.version}</version>
+                                    <updateReleaseInfo>${release}</updateReleaseInfo>
+                                    <uniqueVersion>false</uniqueVersion>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>scala-2.10</id>
-            <activation>
-                <property>
-                    <name>scala-2.10</name>
-                </property>
-            </activation>
             <properties>
                 <build.scala.version>2.10</build.scala.version>
                 <build.scala.compiler.version>2.10.4</build.scala.compiler.version>
                 <deps.scalatest.version>2.10</deps.scalatest.version>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>scala-maven-plugin</artifactId>
+                        <configuration>
+                            <scalaVersion>${build.scala.compiler.version}</scalaVersion>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>property-fix</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}</directory>
+                                            <includes>
+                                                <include>pom.xml</include>
+                                            </includes>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                    <outputDirectory>${project.build.directory}/${property.fix.dir}</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-install-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>overwrite-installed-pom</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>install-file</goal>
+                                </goals>
+                                <configuration>
+                                    <packaging>pom</packaging>
+                                    <file>target/${property.fix.dir}/pom.xml</file>
+                                    <pomFile>target/${property.fix.dir}/pom.xml</pomFile>
+                                    <version>${project.version}</version>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>overwrite-deployed-pom</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>deploy-file</goal>
+                                </goals>
+                                <configuration>
+                                    <repositoryId>${repo.id}</repositoryId>
+                                    <url>${repo.deploy.url}</url>
+                                    <packaging>pom</packaging>
+                                    <file>target/${property.fix.dir}/pom.xml</file>
+                                    <pomFile>target/${property.fix.dir}/pom.xml</pomFile>
+                                    <version>${project.version}</version>
+                                    <updateReleaseInfo>${release}</updateReleaseInfo>
+                                    <uniqueVersion>false</uniqueVersion>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
-
     </profiles>
 
 </project>
