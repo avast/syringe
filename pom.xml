@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.avast</groupId>
-    <artifactId>syringe_2.9</artifactId>
+    <artifactId>syringe_2.10</artifactId>
     <version>1.6-SNAPSHOT</version>
     <packaging>jar</packaging>
     <parent>
@@ -97,7 +97,7 @@
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>2.9.3</version>
+            <version>2.10.4</version>
         </dependency>
 
         <dependency>
@@ -121,7 +121,7 @@
 
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.9.2</artifactId>
+            <artifactId>scalatest_2.10</artifactId>
             <version>1.9.2</version>
             <scope>test</scope>
         </dependency>
@@ -148,7 +148,7 @@
                 <version>3.1.6</version>
 
                 <configuration>
-                    <scalaVersion>2.9.3</scalaVersion>
+                    <scalaVersion>2.10.4</scalaVersion>
                     <addScalacArgs>-deprecation</addScalacArgs>
                 </configuration>
 
