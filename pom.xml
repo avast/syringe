@@ -384,11 +384,9 @@
                                 </goals>
                                 <configuration>
                                     <file>target/${property.fix.dir}/pom.xml</file>
+                                    <pomFile>target/${property.fix.dir}/pom.xml</pomFile>
                                     <repositoryId>${repo.id}</repositoryId>
                                     <url>${repo.deploy.url}</url>
-                                    <groupId>${project.groupId}</groupId>
-                                    <artifactId>${project.artifactId}</artifactId>
-                                    <version>${project.version}</version>
                                 </configuration>
                             </execution>
                         </executions>
@@ -473,11 +471,9 @@
                                 </goals>
                                 <configuration>
                                     <file>target/${property.fix.dir}/pom.xml</file>
+                                    <pomFile>target/${property.fix.dir}/pom.xml</pomFile>
                                     <repositoryId>${repo.id}</repositoryId>
                                     <url>${repo.deploy.url}</url>
-                                    <groupId>${project.groupId}</groupId>
-                                    <artifactId>${project.artifactId}</artifactId>
-                                    <version>${project.version}</version>
                                 </configuration>
                             </execution>
                         </executions>
