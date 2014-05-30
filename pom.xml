@@ -5,7 +5,7 @@
 
     <groupId>com.avast</groupId>
     <artifactId>syringe_${build.scala.version}</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.6.3</version>
     <packaging>jar</packaging>
     <parent>
         <groupId>org.sonatype.oss</groupId>
