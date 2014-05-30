@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.avast</groupId>
-    <artifactId>syringe_2.10</artifactId>
+    <artifactId>syringe_${build.scala.version}</artifactId>
     <version>1.6-SNAPSHOT</version>
     <packaging>jar</packaging>
     <parent>
@@ -121,7 +121,7 @@
 
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.10</artifactId>
+            <artifactId>scalatest_${deps.scalatest.version}</artifactId>
             <version>1.9.2</version>
             <scope>test</scope>
         </dependency>
