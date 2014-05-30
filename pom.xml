@@ -324,6 +324,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
                         <executions>
                             <execution>
                                 <id>property-fix</id>
@@ -349,6 +350,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-install-plugin</artifactId>
+                        <version>2.5.1</version>
                         <executions>
                             <!-- Overwrites the POM installed into local repository with POM with replaced (resolved) properties.
                                  This is necessary for the Scala cross-compilation to work. -->
@@ -369,25 +371,24 @@
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-deploy-plugin</artifactId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
                         <executions>
                             <!-- Overwrites the deployed POM with POM with replaced (resolved) properties.
                                  This is necessary for the Scala cross-compilation to work. -->
                             <execution>
-                                <id>overwrite-deployed-pom</id>
+                                <id>sign-fixed-pom</id>
                                 <phase>deploy</phase>
                                 <goals>
-                                    <goal>deploy-file</goal>
+                                    <goal>sign-and-deploy-file</goal>
                                 </goals>
                                 <configuration>
+                                    <file>target/${property.fix.dir}/pom.xml</file>
                                     <repositoryId>${repo.id}</repositoryId>
                                     <url>${repo.deploy.url}</url>
-                                    <packaging>pom</packaging>
-                                    <file>target/${property.fix.dir}/pom.xml</file>
-                                    <pomFile>target/${property.fix.dir}/pom.xml</pomFile>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
                                     <version>${project.version}</version>
-                                    <updateReleaseInfo>${release}</updateReleaseInfo>
-                                    <uniqueVersion>false</uniqueVersion>
                                 </configuration>
                             </execution>
                         </executions>
@@ -414,6 +415,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
                         <executions>
                             <execution>
                                 <id>property-fix</id>
@@ -439,6 +441,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-install-plugin</artifactId>
+                        <version>2.5.1</version>
                         <executions>
                             <execution>
                                 <id>overwrite-installed-pom</id>
@@ -457,23 +460,24 @@
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-deploy-plugin</artifactId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
                         <executions>
+                            <!-- Overwrites the deployed POM with POM with replaced (resolved) properties.
+                                 This is necessary for the Scala cross-compilation to work. -->
                             <execution>
-                                <id>overwrite-deployed-pom</id>
+                                <id>sign-fixed-pom</id>
                                 <phase>deploy</phase>
                                 <goals>
-                                    <goal>deploy-file</goal>
+                                    <goal>sign-and-deploy-file</goal>
                                 </goals>
                                 <configuration>
+                                    <file>target/${property.fix.dir}/pom.xml</file>
                                     <repositoryId>${repo.id}</repositoryId>
                                     <url>${repo.deploy.url}</url>
-                                    <packaging>pom</packaging>
-                                    <file>target/${property.fix.dir}/pom.xml</file>
-                                    <pomFile>target/${property.fix.dir}/pom.xml</pomFile>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
                                     <version>${project.version}</version>
-                                    <updateReleaseInfo>${release}</updateReleaseInfo>
-                                    <uniqueVersion>false</uniqueVersion>
                                 </configuration>
                             </execution>
                         </executions>
