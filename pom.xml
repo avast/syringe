@@ -5,7 +5,7 @@
 
     <groupId>com.avast</groupId>
     <artifactId>syringe_2.10</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.6.10_2.10</version>
     <packaging>jar</packaging>
     <parent>
         <groupId>org.sonatype.oss</groupId>
