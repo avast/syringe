@@ -54,16 +54,9 @@
     <properties>
         <timestamp>${maven.build.timestamp}</timestamp>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- set only major (short) Scala versions because only major versions are binary incompatible -->
-        <build.scala.version>2.9</build.scala.version>
-        <!-- exact Scala version used to compile the source -->
-        <build.scala.compiler.version>2.9.3</build.scala.compiler.version>
-
-        <deps.scalatest.version>2.9.2</deps.scalatest.version>
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
@@ -95,12 +88,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${build.scala.compiler.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>2.2.2</version>
@@ -125,13 +112,74 @@
             <version>1.9.2</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>3.1.6</version>
+
+                    <configuration>
+                        <addScalacArgs>-deprecation</addScalacArgs>
+                    </configuration>
+
+                    <executions>
+                        <execution>
+                            <id>compile</id>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <phase>compile</phase>
+                        </execution>
+
+                        <execution>
+                            <id>test-compile</id>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                            <phase>test-compile</phase>
+                        </execution>
+
+                        <execution>
+                            <id>compile-2</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>test-compile-2</id>
+                            <phase>process-test-resources</phase>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>docs</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>doc-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
 
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -140,67 +188,6 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>3.1.6</version>
-
-                <configuration>
-                    <scalaVersion>${build.scala.compiler.version}</scalaVersion>
-                    <addScalacArgs>-deprecation</addScalacArgs>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <phase>compile</phase>
-                    </execution>
-
-                    <execution>
-                        <id>test-compile</id>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                        <phase>test-compile</phase>
-                    </execution>
-
-                    <execution>
-                        <id>compile-2</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-
-                    <execution>
-                        <id>test-compile-2</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-
-                    <execution>
-                        <id>sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                    </execution>
-
-                    <execution>
-                        <id>docs</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>doc-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>
@@ -258,13 +245,10 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
-
     </build>
 
     <profiles>
-
         <profile>
             <id>sign-and-release</id>
             <activation>
@@ -298,15 +282,22 @@
             <properties>
                 <build.scala.version>2.9</build.scala.version>
                 <build.scala.compiler.version>2.9.3</build.scala.compiler.version>
-                <deps.scalatest.version>2.9.2</deps.scalatest.version>
+                <deps.scalatest.version>2.9.3</deps.scalatest.version>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.scala-lang</groupId>
+                    <artifactId>scala-library</artifactId>
+                    <version>2.9.3</version>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>net.alchim31.maven</groupId>
                         <artifactId>scala-maven-plugin</artifactId>
                         <configuration>
-                            <scalaVersion>${build.scala.compiler.version}</scalaVersion>
+                            <scalaVersion>2.9.3</scalaVersion>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -319,13 +310,20 @@
                 <build.scala.compiler.version>2.10.4</build.scala.compiler.version>
                 <deps.scalatest.version>2.10</deps.scalatest.version>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.scala-lang</groupId>
+                    <artifactId>scala-library</artifactId>
+                    <version>2.10.4</version>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>net.alchim31.maven</groupId>
                         <artifactId>scala-maven-plugin</artifactId>
                         <configuration>
-                            <scalaVersion>${build.scala.compiler.version}</scalaVersion>
+                            <scalaVersion>2.10.4</scalaVersion>
                         </configuration>
                     </plugin>
                 </plugins>
