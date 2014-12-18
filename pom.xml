@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -109,7 +110,7 @@
         <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${deps.scalatest.version}</artifactId>
-            <version>1.9.2</version>
+            <version>2.2.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -274,32 +275,6 @@
         </profile>
 
         <profile>
-            <id>scala-2.9</id>
-            <properties>
-                <build.scala.version>2.9</build.scala.version>
-                <build.scala.compiler.version>2.9.3</build.scala.compiler.version>
-                <deps.scalatest.version>2.9.3</deps.scalatest.version>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.scala-lang</groupId>
-                    <artifactId>scala-library</artifactId>
-                    <version>2.9.3</version>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>net.alchim31.maven</groupId>
-                        <artifactId>scala-maven-plugin</artifactId>
-                        <configuration>
-                            <scalaVersion>2.9.3</scalaVersion>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>scala-2.10</id>
             <properties>
                 <build.scala.version>2.10</build.scala.version>
@@ -320,6 +295,32 @@
                         <artifactId>scala-maven-plugin</artifactId>
                         <configuration>
                             <scalaVersion>2.10.4</scalaVersion>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>scala-2.11</id>
+            <properties>
+                <build.scala.version>2.11</build.scala.version>
+                <build.scala.compiler.version>2.11.4</build.scala.compiler.version>
+                <deps.scalatest.version>2.11</deps.scalatest.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.scala-lang</groupId>
+                    <artifactId>scala-library</artifactId>
+                    <version>2.11.4</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>scala-maven-plugin</artifactId>
+                        <configuration>
+                            <scalaVersion>2.11.4</scalaVersion>
                         </configuration>
                     </plugin>
                 </plugins>

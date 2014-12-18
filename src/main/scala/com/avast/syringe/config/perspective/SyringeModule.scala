@@ -217,7 +217,7 @@ class SyringeModule extends Module {
       v match {
         // try to unwrap a builders reproduction
         case repWrapper: ReferenceWrapper[_] => repWrapper.ref match {
-          case rep: ReproductionType[_, _] => {
+          case rep: ReproductionType[_, _] @unchecked => {
             val args = rep._1
             val reproducer = rep._2
             // reproduce the builders
@@ -460,7 +460,7 @@ class SyringeModule extends Module {
     case f: Float => Float.box(f)
     case d: Double => Double.box(d)
     case b: Boolean => Boolean.box(b)
-    case _ => assert(false)
+    case any => throw new AssertionError("Unexpected type: " + any.getClass.getName)
   }
 
   implicit def convertScalaListToJavaList[T](list: List[T]): java.util.List[T] = {
