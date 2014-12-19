@@ -74,8 +74,8 @@ first the palette is generated and second the palette is compiled.
 <dependencies>
     <dependency>
         <groupId>com.avast</groupId>
-        <artifactId>syringe_2.9</artifactId>
-        <version>1.6.1</version>
+        <artifactId>syringe_2.10</artifactId>
+        <version>1.7.3</version>
     </dependency>
 </dependencies>
 
@@ -113,7 +113,7 @@ first the palette is generated and second the palette is compiled.
                 <plugin>
                     <groupId>com.avast</groupId>
                     <artifactId>syringe-maven-plugin</artifactId>
-                    <version>1.1</version>
+                    <version>1.2.0</version>
                     <executions>
                         <execution>
                             <id>generate-module</id>
