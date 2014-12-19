@@ -32,8 +32,6 @@ publishArtifactsAction := PgpKeys.publishSigned.value
 sonatypeSettings // Import default settings. This changes `publishTo` settings to use the Sonatype repository and add several commands for publishing.
 
 pomExtra := {
-  <name>Syringe</name>
-  <description>Dependency injection and configuration library for Java and Scala</description>
   <url>https://github.com/avast/syringe</url>
   <licenses>
     <license>
@@ -41,10 +39,6 @@ pomExtra := {
       <url>http://opensource.org/licenses/BSD-3-Clause</url>
     </license>
   </licenses>
-  <organization>
-    <name>AVAST Software</name>
-    <url>http://www.avast.com</url>
-  </organization>
   <developers>
     <developer>
       <id>slajchrt</id>
