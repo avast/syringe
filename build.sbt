@@ -11,15 +11,6 @@ packageOptions := Seq(
     ("Build-Timestamp", System.currentTimeMillis().toString)
   )
 )
-// change the Scala naming convention regarding binary compatibility
-artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
-  val scala = if (Set("2.9.0", "2.9.1", "2.9.2", "2.9.3").contains(sv.binary)) {
-    "2.9"
-  } else {
-    sv.binary
-  }
-  artifact.name + "_" + scala + "-" + module.revision + "." + artifact.extension
-}
 
 libraryDependencies ++= Seq(
   "com.google.code.findbugs" % "jsr305" % "2.0.1",
