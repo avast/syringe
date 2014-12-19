@@ -3,7 +3,7 @@ import sbt.Package.ManifestAttributes
 organization := "com.avast"
 name := "syringe"
 scalaVersion := "2.10.4"
-crossScalaVersions := Seq("2.10.4", "2.11.4")
+crossScalaVersions := Seq("2.9.3", "2.10.4", "2.11.4")
 javacOptions ++= Seq("-source", "1.7")
 javacOptions ++= Seq("-target", "1.7")
 packageOptions := Seq(
@@ -21,7 +21,11 @@ libraryDependencies ++= Seq(
   "cglib" % "cglib" % "2.2.2",
   "commons-io" % "commons-io" % "2.1",
   "junit" % "junit" % "4.10" % "test",
-  "org.scalatest" %% "scalatest" % "2.2.2" % "test"
+  if (scalaVersion.value == "2.9.3") {
+    "org.scalatest" %% "scalatest" % "1.9.2" % "test"
+  } else {
+    "org.scalatest" %% "scalatest" % "2.2.2" % "test"
+  }
 )
 
 import ReleaseKeys._
