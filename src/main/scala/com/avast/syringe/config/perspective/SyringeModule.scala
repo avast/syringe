@@ -226,7 +226,7 @@ class SyringeModule extends Module {
               values ::=(propertyName, builder)
             })
           }
-          case _ => values ::=(propertyName, value)
+          case _ => values ::=(propertyName, v)
         }
         case _ => {
           values ::=(propertyName, v)
