@@ -2,8 +2,8 @@ import sbt.Package.ManifestAttributes
 
 organization := "com.avast"
 name := "syringe"
-scalaVersion := "2.10.4"
-crossScalaVersions := Seq("2.9.3", "2.10.5", "2.11.6")
+scalaVersion := "2.10.5"
+crossScalaVersions := Seq("2.10.5", "2.11.6")
 javacOptions ++= Seq("-source", "1.7")
 javacOptions ++= Seq("-target", "1.7")
 packageOptions := Seq(
