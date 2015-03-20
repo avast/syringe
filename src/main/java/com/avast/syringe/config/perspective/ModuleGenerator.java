@@ -1,6 +1,5 @@
 package com.avast.syringe.config.perspective;
 
-import com.avast.syringe.*;
 import com.avast.syringe.config.ConfigBean;
 import com.avast.syringe.config.internal.ConfigClassAnalyzer;
 import com.avast.syringe.config.internal.InjectableProperty;
@@ -350,8 +349,11 @@ public class ModuleGenerator {
     }
 
     private static String constructGenericScalaTypeName(Class type) {
-        // TODO:
-        return "_";
+        String name = type.getName();
+        if (name == null || name.isEmpty()) {
+            name = "_";
+        }
+        return name;
     }
 
     private static String constructGenericScalaPlaceholder(TypeVariable typeParameter) {
