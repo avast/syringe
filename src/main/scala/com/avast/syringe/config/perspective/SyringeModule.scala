@@ -1,10 +1,10 @@
 package com.avast.syringe.config.perspective
 
 import com.avast.syringe.config.PropertyValueConverter
-import javax.annotation.PostConstruct
+import javax.annotation.{PreDestroy, PostConstruct}
 import com.avast.syringe.config.internal.{InjectableProperty, ConfigClassAnalyzer}
 import com.google.common.collect.Lists
-import java.lang.reflect.{Proxy, InvocationHandler}
+import java.lang.reflect.{Method, Proxy, InvocationHandler}
 import com.avast.syringe.aop.Interceptor
 import org.slf4j.LoggerFactory
 
@@ -21,6 +21,8 @@ class SyringeModule extends Module {
   private val LOGGER = LoggerFactory.getLogger(classOf[SyringeModule])
 
   protected var builders = Map.empty[String, Builder[_]]
+  protected var preDestroyList = List.empty[(Method, _)]
+  protected var shutdownHook: Thread = null
 
   def getBuilders = builders
 
@@ -41,6 +43,31 @@ class SyringeModule extends Module {
   def addConverter(c: Conv) {
     converters ::= c
   }
+
+  private def registerShutdownHook(): Unit = {
+    if (shutdownHook == null) {
+      this.synchronized {
+        if (shutdownHook == null) {
+          this.shutdownHook = new Thread() {
+            override def run(): Unit = {
+              doClose()
+            }
+          }
+
+          Runtime.getRuntime.addShutdownHook(this.shutdownHook)
+        }
+      }
+    }
+  }
+
+  private def doClose(): Unit = {
+
+    for ((method: Method, instance: Object) <- preDestroyList) {
+      method.invoke(instance)
+    }
+  }
+
+  registerShutdownHook()
 
   private def combineResolvers(prop: InjectableProperty): RF = {
     val partialResolvers = resolvers.map(r => r(prop))
@@ -332,6 +359,7 @@ class SyringeModule extends Module {
       }
 
       notifyPostConstruct(instance)
+      registerInstanceToPreDestroy(instance)
 
       instance
     }
@@ -398,6 +426,14 @@ class SyringeModule extends Module {
       val postConstMethod = ConfigClassAnalyzer.findAnnotatedMethod(classOf[PostConstruct], instanceClass)
       if (postConstMethod != null) {
         postConstMethod.invoke(instance)
+      }
+    }
+
+    private def registerInstanceToPreDestroy[D >: T](instance: D): Unit = {
+      val preDestroyMethod = ConfigClassAnalyzer.findAnnotatedMethod(classOf[PreDestroy], instanceClass)
+      if (preDestroyMethod != null) {
+        //We register in reverse order, so we destroy from outside beans to inner
+        preDestroyList = preDestroyList.+:((preDestroyMethod, instance))
       }
     }
 
