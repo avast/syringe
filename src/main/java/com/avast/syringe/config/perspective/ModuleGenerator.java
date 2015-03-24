@@ -352,6 +352,18 @@ public class ModuleGenerator {
         String name = type.getName();
         if (name == null || name.isEmpty()) {
             name = "_";
+        } else {
+            TypeVariable<Class>[] types = type.getTypeParameters();
+            if (types.length != 0) {
+                StringBuilder builder = new StringBuilder(name);
+                builder.append("[");
+                for (int i = 0; i < types.length; i++) {
+                    builder.append("_,");
+                }
+                builder.delete(builder.length() -1, builder.length());
+                builder.append("]");
+                name = builder.toString();
+            }
         }
         return name;
     }
