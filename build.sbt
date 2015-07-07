@@ -3,9 +3,9 @@ import sbt.Package.ManifestAttributes
 organization := "com.avast"
 name := "syringe"
 scalaVersion := "2.10.5"
-crossScalaVersions := Seq("2.10.5", "2.11.6")
-javacOptions ++= Seq("-source", "1.7")
-javacOptions ++= Seq("-target", "1.7")
+crossScalaVersions := Seq("2.10.5", "2.11.7")
+javacOptions ++= Seq("-source", "1.8")
+javacOptions ++= Seq("-target", "1.8")
 packageOptions := Seq(
   ManifestAttributes(
     ("Build-Timestamp", System.currentTimeMillis().toString)
@@ -22,19 +22,13 @@ libraryDependencies ++= Seq(
   "commons-io" % "commons-io" % "2.1",
   "javax.inject" % "javax.inject" % "1",
   "junit" % "junit" % "4.10" % "test",
-  if (scalaVersion.value == "2.9.3") {
-    "org.scalatest" %% "scalatest" % "1.9.2" % "test"
-  } else {
-    "org.scalatest" %% "scalatest" % "2.2.2" % "test"
-  }
+  "org.scalatest" %% "scalatest" % "2.2.2" % "test"
 )
 
 import ReleaseKeys._
 releaseSettings
 crossBuild := true
 publishArtifactsAction := PgpKeys.publishSigned.value
-
-sonatypeSettings // Import default settings. This changes `publishTo` settings to use the Sonatype repository and add several commands for publishing.
 
 pomExtra := {
   <url>https://github.com/avast/syringe</url>
