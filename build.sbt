@@ -20,6 +20,7 @@ libraryDependencies ++= Seq(
   "xom" % "xom" % "1.2.5",
   "cglib" % "cglib" % "2.2.2",
   "commons-io" % "commons-io" % "2.1",
+  "javax.inject" % "javax.inject" % "1",
   "junit" % "junit" % "4.10" % "test",
   if (scalaVersion.value == "2.9.3") {
     "org.scalatest" %% "scalatest" % "1.9.2" % "test"

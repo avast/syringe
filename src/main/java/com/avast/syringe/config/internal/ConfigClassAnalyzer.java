@@ -1,6 +1,5 @@
 package com.avast.syringe.config.internal;
 
-import com.avast.syringe.config.ConfigProperty;
 import com.avast.syringe.config.PropertyValueConverter;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
@@ -17,11 +16,13 @@ import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ConfigClassAnalyzer {
 
     private final Class<?> configClass;
     private final PropertyValueConverter converter;
+    private final InjectablePropertyFactory factory;
 
     public ConfigClassAnalyzer(Class<?> configClass) {
         this(configClass, null);
@@ -30,6 +31,7 @@ public class ConfigClassAnalyzer {
     public ConfigClassAnalyzer(Class<?> configClass, @Nullable PropertyValueConverter converter) {
         this.configClass = configClass;
         this.converter = converter;
+        this.factory = new InjectablePropertyFactory(converter);
     }
 
     public static Method findAnnotatedMethod(Class<? extends Annotation> annotationClass, Class cls) {
@@ -114,17 +116,9 @@ public class ConfigClassAnalyzer {
                     continue;
                 }
 
-                ConfigProperty configParam = field.getAnnotation(ConfigProperty.class);
-                if (configParam != null) {
-                    InjectableProperty property = new ReflectionInjectableProperty(
-                            field,
-                            configParam.optional(),
-                            configParam.name(),
-                            configParam.habitat(),
-                            configParam.delegate(),
-                            converter
-                    );
-                    result.add(property);
+                Optional<InjectableProperty> maybeProperty = factory.newProperty(field);
+                if (maybeProperty.isPresent()) {
+                    result.add(maybeProperty.get());
                 }
             }
         }

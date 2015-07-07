@@ -1,0 +1,32 @@
+package com.avast.syringe.config.perspective
+import com.avast.syringe.config.perspective._
+import javax.annotation.Generated
+/**
+ * Description
+ *
+ */
+@Generated(value = Array("Syringe"))
+trait OneComponentModule extends SyringeModule
+with com.avast.Trait1
+with com.avast.Trait2
+{
+
+object SampleBBuilder
+{
+    type instanceType = com.avast.syringe.config.perspective.SampleB
+    val instanceClass = classOf[com.avast.syringe.config.perspective.SampleB]
+}
+class SampleBBuilder (instanceClass: Class[_]) extends SyringeBuilder[SampleBBuilder.instanceType](instanceClass)
+with com.avast.BuilderTrait1[SampleBBuilder.instanceType]
+with com.avast.BuilderTrait2[SampleBBuilder.instanceType]
+{
+    def this() = this(SampleBBuilder.instanceClass)
+    def set(propertyName: String, value: => Any): this.type = inject(propertyName, value)
+    def name(value: => String): this.type = inject("name", value)
+    def age(value: => Int): this.type = inject("age", value)
+}
+
+def newSampleB = new SampleBBuilder().initialize
+lazy val sampleB = __sm__[SampleBBuilder](newSampleB)
+
+}

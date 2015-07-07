@@ -1,9 +1,8 @@
 package com.avast.syringe.config.perspective;
 
-import com.avast.syringe.*;
-import com.avast.syringe.config.ConfigBean;
 import com.avast.syringe.config.internal.ConfigClassAnalyzer;
 import com.avast.syringe.config.internal.InjectableProperty;
+import com.avast.syringe.config.perspective.resolver.BeanNameResolution;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
@@ -135,12 +134,8 @@ public class ModuleGenerator {
                     name = typeName = cls.getName();
                 }
 
-                ConfigBean cfgBeanAnnot = cls.getAnnotation(ConfigBean.class);
-                if (cfgBeanAnnot != null && !"".equals(cfgBeanAnnot.value())) {
-                    simpleName = cfgBeanAnnot.value();
-                } else {
-                    simpleName = cls.getSimpleName();
-                }
+                //support for various annotation resolution
+                simpleName = new BeanNameResolution().resolveOrThrowException(cls);
 
                 builderMethodName = "new" + simpleName;
                 singletonBuilderMethodName = makeFirstLowerCase(simpleName);
